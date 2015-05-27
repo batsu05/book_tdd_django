@@ -20,3 +20,16 @@ class HomePageTest(TestCase):
 		# self.assertTrue(response.content.startswith(b'<html>'))
 		# self.assertIn(b'<title>To-Do lists</title>', response.content)
 		# self.assertTrue(response.content.endswith(b'</html>'))
+
+	def test_home_page_can_save_a_POST_request(self):
+		request = HttpRequest()
+		request.method = 'POST'
+		request.POST['item_text'] = 'new item'
+
+		response = home_page(request)
+
+		self.assertIn('new item', response.content.decode())
+		expected_html = render_to_string('home.html',{'new_item_text':'new item'})
+		self.assertEqual(response.content.decode(), expected_html)
+
+		

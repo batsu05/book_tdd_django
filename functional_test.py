@@ -25,14 +25,28 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys('buy feather')
 		inputbox.send_keys(Keys.ENTER)
 
-		import time
-		time.sleep(10)
+		# import time
+		# time.sleep(10)
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
 
-		self.assertTrue(
-			any(row.text == '1: buy feather' for row in rows), "no items in table")
+		#self.assertIn('1: buy feather', [row.text for row in rows])
+
+		#self.assertTrue(
+		#	any(row.text == '1: buy feather' for row in rows), "no items in table")
+
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('making net with feather')
+		inputbox.send_keys(Keys.ENTER)
+
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+
+		self.assertIn('1: buy feather', [row.text for row in rows])
+		self.assertIn('2: making net with feather', [row.text for row in rows])
+
+
 
 		self.fail('Finish the test!')
 
